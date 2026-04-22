@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Shop - MiMe</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<h2 class="section-title">Products</h2>
+
+<div class="grid">
+    <div class="card" th:each="p : ${products}">
+        <img th:src="${p.imageUrl}" />
+        <h3 th:text="${p.name}"></h3>
+        <p>₹ <span th:text="${p.price}"></span></p>
+        <a th:href="@{'/product/' + ${p.id}}" class="btn">View</a>
+    </div>
+</div>
+
+</body>
+</html>
