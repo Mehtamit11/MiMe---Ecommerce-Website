@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Product</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<h1>Add Product</h1>
+
+<form method="post" action="/admin/products/save">
+
+    <input type="text" name="name" placeholder="Name" required/>
+    <input type="text" name="description" placeholder="Description"/>
+    <input type="number" name="price" placeholder="Price"/>
+    <input type="number" name="stock" placeholder="Stock"/>
+    <input type="text" name="imageUrl" placeholder="Image URL"/>
+
+    <button class="btn">Save</button>
+
+</form>
+
+</body>
+</html>
