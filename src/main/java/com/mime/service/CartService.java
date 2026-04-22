@@ -8,3 +8,4 @@ public interface CartService {
 
     Cart addToCart(Long userId, Long productId, int quantity);
 }
+Cart checkout(Long userId);
