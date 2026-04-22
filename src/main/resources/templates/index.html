@@ -6,10 +6,13 @@
 </head>
 <body>
 
-<h1>Welcome to MiMe</h1>
-<p>Your premium ecommerce experience</p>
+<div th:replace="fragments/navbar :: navbar"></div>
 
-<a href="/login">Login</a>
+<section class="hero">
+    <h1>Luxury Redefined</h1>
+    <p>Discover curated premium collections</p>
+    <a href="/products" class="btn">Shop Now</a>
+</section>
 
 </body>
 </html>
