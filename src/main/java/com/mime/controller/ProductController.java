@@ -1,28 +1,15 @@
-package com.mime.controller;
+import com.mime.service.RecommendationService;
 
-import com.mime.service.ProductService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+private final RecommendationService recService;
 
-@Controller
-public class ProductController {
+public ProductController(ProductService service, RecommendationService recService) {
+    this.service = service;
+    this.recService = recService;
+}
 
-    private final ProductService service;
-
-    public ProductController(ProductService service) {
-        this.service = service;
-    }
-
-    @GetMapping("/products")
-    public String products(Model model) {
-        model.addAttribute("products", service.getAllProducts());
-        return "products";
-    }
-
-    @GetMapping("/product/{id}")
-    public String product(@PathVariable Long id, Model model) {
-        model.addAttribute("product", service.getProductById(id));
-        return "product-details";
-    }
+@GetMapping("/product/{id}")
+public String product(@PathVariable Long id, Model model) {
+    model.addAttribute("product", service.getProductById(id));
+    model.addAttribute("similarProducts", recService.getSimilarProducts(id));
+    return "product-details";
 }
