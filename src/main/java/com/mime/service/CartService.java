@@ -7,5 +7,6 @@ public interface CartService {
     Cart getCartByUser(Long userId);
 
     Cart addToCart(Long userId, Long productId, int quantity);
+
+    Cart checkout(Long userId);
 }
-Cart checkout(Long userId);
