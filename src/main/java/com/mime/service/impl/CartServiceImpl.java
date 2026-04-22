@@ -48,4 +48,43 @@ public class CartServiceImpl implements CartService {
 
         return cartRepo.save(cart);
     }
+    @Override
+public Cart checkout(Long userId) {
+
+    Cart cart = getCartByUser(userId);
+
+    Order order = new Order();
+    order.setUser(cart.getUser());
+    order.setCreatedAt(java.time.LocalDateTime.now());
+
+    double total = 0;
+
+    List<OrderItem> orderItems = new java.util.ArrayList<>();
+
+    for (CartItem item : cart.getItems()) {
+
+        OrderItem oi = new OrderItem();
+        oi.setProduct(item.getProduct());
+        oi.setQuantity(item.getQuantity());
+        oi.setPrice(item.getProduct().getPrice());
+        oi.setOrder(order);
+
+        total += item.getQuantity() * item.getProduct().getPrice();
+
+        orderItems.add(oi);
+    }
+
+    order.setItems(orderItems);
+    order.setTotalAmount(total);
+    order.setStatus("PLACED");
+
+    // save order
+    orderRepo.save(order);
+
+    // clear cart
+    cart.getItems().clear();
+    cartRepo.save(cart);
+
+    return cart;
+}
 }
