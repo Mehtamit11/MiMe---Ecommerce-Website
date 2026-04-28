@@ -1,12 +1,15 @@
 package com.mime.service.impl;
 
-import com.mime.model.*;
-import com.mime.repository.*;
+import com.mime.model.Role;
+import com.mime.model.User;
+import com.mime.repository.RoleRepository;
+import com.mime.repository.UserRepository;
 import com.mime.service.UserService;
 
-import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -25,15 +28,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User registerUser(User user) {
+public User registerUser(User user) {
+        return createUser(user, false);
+    }
+
+    @Override
+    public User createUser(User user, boolean adminRole) {
+        userRepository.findByEmail(user.getEmail()).ifPresent(existing -> {
+            throw new IllegalArgumentException("Email already exists: " + existing.getEmail());
+        });
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        Role role = roleRepository.findByName("ROLE_USER")
-                .orElseGet(() -> roleRepository.save(new Role(null, "ROLE_USER")));
-
+         Role role = adminRole
+                ? roleRepository.findByName("ROLE_ADMIN").orElseGet(() -> roleRepository.save(new Role(null, "ROLE_ADMIN")))
+                : roleRepository.findByName("ROLE_USER").orElseGet(() -> roleRepository.save(new Role(null, "ROLE_USER")));
+        
         user.setRoles(Set.of(role));
+        user.setEnabled(true);
 
         return userRepository.save(user);
+    }
+    
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }
