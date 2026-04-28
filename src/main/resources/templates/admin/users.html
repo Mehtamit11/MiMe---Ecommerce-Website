@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manage Users</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<h1>Manage Users</h1>
+
+<p th:if="${error}" th:text="${error}" style="color: #b00020;"></p>
+
+<form method="post" action="/admin/users/save">
+    <input type="text" name="name" placeholder="Name" required/>
+    <input type="email" name="email" placeholder="Email" required/>
+    <input type="password" name="password" placeholder="Password" required/>
+
+    <label>
+        <input type="checkbox" name="adminRole" value="true"/>
+        Create as admin
+    </label>
+
+    <button class="btn">Add User</button>
+</form>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Enabled</th>
+        <th>Roles</th>
+    </tr>
+
+    <tr th:each="u : ${users}">
+        <td th:text="${u.name}"></td>
+        <td th:text="${u.email}"></td>
+        <td th:text="${u.enabled}"></td>
+        <td th:text="${u.roles}"></td>
+    </tr>
+</table>
+
+</body>
+</html>
