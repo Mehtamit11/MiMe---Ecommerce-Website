@@ -18,10 +18,18 @@
 
 ## ▶️ Run Locally
 
-### 1. Create Database
+### 0. Prerequisites
+- JDK 17+ (`java -version`)
+- Maven 3.9+ (`mvn -version`)
+
+> If you see `release version 17 not supported`, your machine is using an older JDK. Install JDK 17+ and make sure `JAVA_HOME` points to it before running Maven.
+
+### 1. Create Database (optional if using PostgreSQL)
 CREATE DATABASE mime_db;
 
-### 2. Configure application.properties
+### 2. Configure database
+- For PostgreSQL, set `DATABASE_URL`, `DATABASE_USERNAME`, and `DATABASE_PASSWORD`.
+- For quick local run, defaults use H2 in-memory DB from `application.properties`.
 
 ### 3. Run
 mvn spring-boot:run
